@@ -9,16 +9,17 @@ from keras.utils import to_categorical
 
 #load data
 (X_train, y_train),(X_test, y_test) = mnist.load_data()
-#print(X_train.shape)
+print(X_train.shape)
 #normalize the data
 
-#categorical
-#y_train = y_train.astype('float32')/255.0
-#y_test = y_test.astype('float32')/255.0
+# normalize the images
+X_train = X_train.astype('float32') / 255.0
+X_test = X_test.astype('float32') / 255.0
 
-#one-hot encoding
-y_train = to_categorical(y_train)
-y_test = to_categorical(y_test)
+# one-hot encode the labels
+y_train = to_categorical(y_train, num_classes=10)
+y_test = to_categorical(y_test, num_classes=10)
+
 
 #build the architecture
 
@@ -43,17 +44,20 @@ model.evaluate(X_test,y_test)
 sample_images = X_test[:5]
 sample_labels=y_test[:5]
 
-predictions = model.predict(sample_images,sample_labels)
+predictions = model.predict(sample_images)
+
 print(predictions)
 
 result = np.argmax(predictions, axis = 1)
 
 print(result)
 
-for i in range (5):
-    plt.subplot(1,5,i+1)
-    y_test1 = np.argmax(sample_labels[i])
-    plt.title(f'Actual: {y_test1[i]} in predicted label {result[i]}')
-    plt.imshow(sample_images[i],cmap = 'gray')
-    plt.show()
+for i in range(5):
+    actual = np.argmax(sample_labels[i])  # Actual digit label
+    predicted = result[i]                 # Predicted digit
+    plt.subplot(1, 5, i + 1)
+    plt.title(f'Actual: {actual}\nPredicted: {predicted}')
+    plt.imshow(sample_images[i], cmap='gray')
+    plt.axis('off')
+plt.show()
 
