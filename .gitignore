@@ -5,3 +5,10 @@ __pycache__/
 node_modules
 Lib
 Scripts
+
+# CIFAR-10 dataset files
+data/cifar-10-python.tar.gz
+data/cifar-10-batches-py/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
